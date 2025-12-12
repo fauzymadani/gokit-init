@@ -1,0 +1,59 @@
+package handler
+
+import (
+	"encoding/json"
+	"net/http"
+	"strconv"
+
+	"{{.ModulePath}}/internal/service"
+)
+
+// UserHandler handles HTTP requests for users
+type UserHandler struct {
+	service *service.UserService
+}
+
+// NewUserHandler creates a new user handler
+func NewUserHandler(service *service.UserService) *UserHandler {
+	return &UserHandler{service: service}
+}
+
+// GetUser handles GET /users/:id
+func (h *UserHandler) GetUser(w http.ResponseWriter, r *http.Request) {
+	// Extract ID from URL (implement your routing solution)
+	idStr := r.URL.Query().Get("id")
+	id, err := strconv.ParseInt(idStr, 10, 64)
+	if err != nil {
+		http.Error(w, "Invalid ID", http.StatusBadRequest)
+		return
+	}
+
+	user, err := h.service.GetUser(id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(user)
+}
+
+// CreateUser handles POST /users
+func (h *UserHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
+	// TODO: Implement user creation
+	w.WriteHeader(http.StatusCreated)
+}
+
+// UpdateUser handles PUT /users/:id
+func (h *UserHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
+	// TODO: Implement user update
+	w.WriteHeader(http.StatusOK)
+}
+
+// DeleteUser handles DELETE /users/:id
+func (h *UserHandler) DeleteUser(w http.ResponseWriter, r *http.Request) {
+	// TODO: Implement user deletion
+	w.WriteHeader(http.StatusNoContent)
+}
+
+

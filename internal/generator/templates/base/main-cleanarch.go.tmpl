@@ -1,0 +1,44 @@
+package main
+
+import (
+	"fmt"
+	"log"
+	"net/http"
+	"os"
+
+	"{{.ModulePath}}/internal/handler"
+	"{{.ModulePath}}/internal/repository"
+	"{{.ModulePath}}/internal/service"
+)
+
+func main() {
+	port := os.Getenv("APP_PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	// Initialize layers (add DB connection when database is configured)
+	// db := initDatabase()
+	userRepo := repository.NewUserRepository(nil)
+	userService := service.NewUserService(userRepo)
+	userHandler := handler.NewUserHandler(userService)
+
+	// Routes
+	http.HandleFunc("/", homeHandler)
+	http.HandleFunc("/health", healthHandler)
+	http.HandleFunc("/users", userHandler.GetUser)
+
+	fmt.Printf("Server starting on port %s\n", port)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
+}
+
+func homeHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Welcome to {{.ProjectName}}!")
+}
+
+func healthHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	fmt.Fprintf(w, `{"status": "healthy"}`)
+}
+
+

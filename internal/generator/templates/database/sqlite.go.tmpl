@@ -1,0 +1,30 @@
+package config
+
+import (
+	"database/sql"
+	"log"
+	"os"
+
+	_ "github.com/mattn/go-sqlite3"
+)
+
+// InitSQLite initializes SQLite database connection
+func InitSQLite() (*sql.DB, error) {
+	dbPath := os.Getenv("DB_PATH")
+	if dbPath == "" {
+		dbPath = "./data.db"
+	}
+
+	db, err := sql.Open("sqlite3", dbPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := db.Ping(); err != nil {
+		return nil, err
+	}
+
+	log.Println("SQLite connected successfully")
+	return db, nil
+}
+

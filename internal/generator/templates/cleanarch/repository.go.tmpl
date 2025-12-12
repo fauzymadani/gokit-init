@@ -1,0 +1,41 @@
+package repository
+
+import (
+	"database/sql"
+	"{{.ModulePath}}/internal/domain"
+)
+
+// UserRepository handles user data access
+type UserRepository struct {
+	db *sql.DB
+}
+
+// NewUserRepository creates a new user repository
+func NewUserRepository(db *sql.DB) *UserRepository {
+	return &UserRepository{db: db}
+}
+
+// FindByID retrieves a user by ID
+func (r *UserRepository) FindByID(id int64) (*domain.User, error) {
+	// TODO: Implement database query
+	return nil, nil
+}
+
+// Create inserts a new user
+func (r *UserRepository) Create(user *domain.User) error {
+	// TODO: Implement database insert
+	return nil
+}
+
+// Update modifies an existing user
+func (r *UserRepository) Update(user *domain.User) error {
+	// TODO: Implement database update
+	return nil
+}
+
+// Delete removes a user by ID
+func (r *UserRepository) Delete(id int64) error {
+	// TODO: Implement database delete
+	return nil
+}
+
