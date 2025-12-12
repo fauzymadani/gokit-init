@@ -39,7 +39,7 @@ A powerful CLI tool for generating boilerplate Go web application projects with 
 ### From Source
 
 ```bash
-git clone https://github.com/yourusername/gokit-init.git
+git clone https://github.com/fauzymadani/gokit-init.git
 cd gokit-init
 go build -o gokit-init
 sudo mv gokit-init /usr/local/bin/
@@ -48,7 +48,7 @@ sudo mv gokit-init /usr/local/bin/
 Or install directly:
 
 ```bash
-go install github.com/yourusername/gokit-init@latest
+go install github.com/fauzymadani/gokit-init@latest
 ```
 
 ## Usage
